@@ -111,16 +111,16 @@ const Grid = ({ size, onBack }) => {
         }
     };
 
-    // // Switch player turn manually
-    // const handleSwitchTurn = () => {
-    //     if ((currentPlayer === 1 && player1HasPlayed) || (currentPlayer === 2 && player2HasPlayed)) {
-    //         setCurrentPlayer((prevPlayer) => (prevPlayer === 1 ? 2 : 1));
-    //         setPlayer1HasPlayed(false);  // Reset the player 1 status
-    //         setPlayer2HasPlayed(false);  // Reset the player 2 status
-    //     } else {
-    //         setError("Player must insert a character before switching turn");
-    //     }
-    // };
+    // Switch player turn manually
+    const handleSwitchTurn = () => {
+        if ((currentPlayer === 1 && player1HasPlayed) || (currentPlayer === 2 && player2HasPlayed)) {
+            setCurrentPlayer((prevPlayer) => (prevPlayer === 1 ? 2 : 1));
+            setPlayer1HasPlayed(false);  // Reset the player 1 status
+            setPlayer2HasPlayed(false);  // Reset the player 2 status
+        } else {
+            setError("Player must insert a character before switching turn");
+        }
+    };
 
     return (
         <div
@@ -196,12 +196,12 @@ const Grid = ({ size, onBack }) => {
             </div>
 
             {/* Button to switch turn */}
-            {/* <button
+            <button
                 onClick={handleSwitchTurn}
                 className="mt-4 px-6 py-3 bg-blue-500 text-white font-medium rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
                 Switch Turn
-            </button> */}
+            </button>
         </div>
     );
 };
