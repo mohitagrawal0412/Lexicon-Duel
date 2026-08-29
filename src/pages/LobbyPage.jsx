@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Swords, Globe, Wifi, Users } from 'lucide-react';
+import { Gamepad2, Globe, Hash, Target, Trophy, User, Zap, Brain, Type, Search, Calculator, Image as ImageIcon } from 'lucide-react';
 
 const LobbyPage = () => {
   const { user, isConfigured } = useAuth();
@@ -24,62 +24,163 @@ const LobbyPage = () => {
       </div>
 
       {/* Game Modes */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-4xl mb-10">
-        
-        {/* Local Duel */}
-        <button
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto w-full">
+        {/* Local Duel Card */}
+        <div 
           onClick={() => navigate('/local')}
-          className="group card-glass p-6 text-left hover:border-yellow-400/20 hover:bg-yellow-400/[0.03] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+          className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 cursor-pointer hover:border-p1-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1"
         >
-          <div className="w-12 h-12 rounded-xl bg-yellow-400/10 flex items-center justify-center mb-4 group-hover:bg-yellow-400/20 transition-colors">
-            <Swords className="w-6 h-6 text-yellow-400" />
+          <div className="absolute top-0 left-0 w-full h-1 bg-p1-500/50 rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="w-14 h-14 bg-surface-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <Gamepad2 className="text-p1-400" size={28} />
           </div>
-          <h3 className="text-lg font-bold text-white mb-1">Local Duel</h3>
-          <p className="text-xs text-gray-500 leading-relaxed">
-            Play against a friend on the same screen. Pass the device back and forth.
-          </p>
-          <div className="flex items-center gap-1.5 mt-4 text-xs text-gray-600">
-            <Users className="w-3 h-3" />
-            <span>2 Players</span>
-          </div>
-        </button>
+          <h2 className="text-xl font-bold text-white mb-2">Local Duel</h2>
+          <p className="text-gray-400 text-sm">Play Lexicon Duel locally with a friend on the same device.</p>
+        </div>
 
-        {/* Online Duel */}
-        <button
+        {/* Online Duel Card */}
+        <div 
           onClick={() => navigate('/online')}
-          className="group card-glass p-6 text-left hover:border-purple-400/20 hover:bg-purple-400/[0.03] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] relative"
+          className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 cursor-pointer hover:border-purple-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:-translate-y-1"
         >
-          <div className="w-12 h-12 rounded-xl bg-purple-400/10 flex items-center justify-center mb-4 group-hover:bg-purple-400/20 transition-colors">
-            <Globe className="w-6 h-6 text-purple-400" />
+          <div className="absolute top-0 left-0 w-full h-1 bg-purple-500/50 rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="w-14 h-14 bg-surface-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform relative">
+            <Globe className="text-purple-400" size={28} />
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse-soft border-2 border-surface-900" />
           </div>
-          <h3 className="text-lg font-bold text-white mb-1">Online Duel</h3>
-          <p className="text-xs text-gray-500 leading-relaxed">
-            Create a room and share the code with a friend. Play in real-time from anywhere.
-          </p>
-          <div className="flex items-center gap-1.5 mt-4 text-xs text-gray-600">
-            <Wifi className="w-3 h-3" />
-            <span>Real-time</span>
-          </div>
-        </button>
-
-        {/* Tic Tac Toe */}
-        <button
+          <h2 className="text-xl font-bold text-white mb-2">Online Duel</h2>
+          <p className="text-gray-400 text-sm">Create a room and invite a friend to play Lexicon Duel online.</p>
+        </div>
+        
+        {/* Tic Tac Toe Card */}
+        <div 
           onClick={() => navigate('/tictactoe')}
-          className="group card-glass p-6 text-left hover:border-teal-400/20 hover:bg-teal-400/[0.03] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+          className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 cursor-pointer hover:border-p2-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] hover:-translate-y-1"
         >
-          <div className="w-12 h-12 rounded-xl bg-teal-400/10 flex items-center justify-center mb-4 group-hover:bg-teal-400/20 transition-colors">
-            <span className="text-2xl font-black text-teal-400">#</span>
+          <div className="absolute top-0 left-0 w-full h-1 bg-p2-500/50 rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="w-14 h-14 bg-surface-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <Hash className="text-p2-400" size={28} />
           </div>
-          <h3 className="text-lg font-bold text-white mb-1">Tic Tac Toe</h3>
-          <p className="text-xs text-gray-500 leading-relaxed">
-            Take a break from words. Play classic Tic Tac Toe with a friend locally.
-          </p>
-          <div className="flex items-center gap-1.5 mt-4 text-xs text-gray-600">
-            <Users className="w-3 h-3" />
-            <span>2 Players</span>
+          <h2 className="text-xl font-bold text-white mb-2">Tic Tac Toe</h2>
+          <p className="text-gray-400 text-sm">Classic 3x3 game. Play locally or online against a friend.</p>
+        </div>
+        
+        {/* Guess Battle Card */}
+        <div 
+          onClick={() => navigate('/guess-battle')}
+          className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 cursor-pointer hover:border-pink-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(236,72,153,0.15)] hover:-translate-y-1"
+        >
+          <div className="absolute top-0 left-0 w-full h-1 bg-pink-500/50 rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="w-14 h-14 bg-surface-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <Target className="text-pink-400" size={28} />
           </div>
-        </button>
+          <h2 className="text-xl font-bold text-white mb-2">Guess Battle</h2>
+          <p className="text-gray-400 text-sm">1v1 competitive guessing game. Play local, bot, or online.</p>
+        </div>
 
+        {/* Bis Gutiya Card */}
+        <div 
+          onClick={() => navigate('/bis-gutiya')}
+          className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 cursor-pointer hover:border-orange-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(249,115,22,0.15)] hover:-translate-y-1"
+        >
+          <div className="absolute top-0 left-0 w-full h-1 bg-orange-500/50 rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="w-14 h-14 bg-surface-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <Gamepad2 className="text-orange-400" size={28} />
+          </div>
+          <h2 className="text-xl font-bold text-white mb-2">Bis Gutiya</h2>
+          <p className="text-gray-400 text-sm">Classic 5x5 strategy game. Capture opponent pieces by jumping!</p>
+        </div>
+
+        {/* Reaction Battle Card */}
+        <div 
+          onClick={() => navigate('/reaction-battle')}
+          className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 cursor-pointer hover:border-yellow-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(234,179,8,0.15)] hover:-translate-y-1"
+        >
+          <div className="absolute top-0 left-0 w-full h-1 bg-yellow-500/50 rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="w-14 h-14 bg-surface-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <Zap className="text-yellow-400" size={28} />
+          </div>
+          <h2 className="text-xl font-bold text-white mb-2">Reaction Battle</h2>
+          <p className="text-gray-400 text-sm">Test your reflexes! Find and tap the unique item before your opponent.</p>
+        </div>
+
+        {/* Number Memory Card */}
+        <div 
+          onClick={() => navigate('/number-memory')}
+          className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 cursor-pointer hover:border-indigo-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(99,102,241,0.15)] hover:-translate-y-1"
+        >
+          <div className="absolute top-0 left-0 w-full h-1 bg-indigo-500/50 rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="w-14 h-14 bg-surface-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <Brain className="text-indigo-400" size={28} />
+          </div>
+          <h2 className="text-xl font-bold text-white mb-2">Number Memory</h2>
+          <p className="text-gray-400 text-sm">Memorize the sequence before it vanishes. Type it back correctly!</p>
+        </div>
+
+        {/* Word Scramble Card */}
+        <div 
+          onClick={() => navigate('/word-scramble')}
+          className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 cursor-pointer hover:border-red-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(239,68,68,0.15)] hover:-translate-y-1"
+        >
+          <div className="absolute top-0 left-0 w-full h-1 bg-red-500/50 rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="w-14 h-14 bg-surface-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <Type className="text-red-400" size={28} />
+          </div>
+          <h2 className="text-xl font-bold text-white mb-2">Word Scramble</h2>
+          <p className="text-gray-400 text-sm">Race to unscramble the hidden word! 5, 7, and 9 letter modes.</p>
+        </div>
+
+        {/* Missing Letter Card */}
+        <div 
+          onClick={() => navigate('/missing-letter')}
+          className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 cursor-pointer hover:border-teal-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(20,184,166,0.15)] hover:-translate-y-1"
+        >
+          <div className="absolute top-0 left-0 w-full h-1 bg-teal-500/50 rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="w-14 h-14 bg-surface-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <Search className="text-teal-400" size={28} />
+          </div>
+          <h2 className="text-xl font-bold text-white mb-2">Missing Letter</h2>
+          <p className="text-gray-400 text-sm">Find the missing letter in categorized words. Race against time!</p>
+        </div>
+
+        {/* Odd One Out Card */}
+        <div 
+          onClick={() => navigate('/odd-one-out')}
+          className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 cursor-pointer hover:border-blue-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1"
+        >
+          <div className="absolute top-0 left-0 w-full h-1 bg-blue-500/50 rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="w-14 h-14 bg-surface-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <Target className="text-blue-400" size={28} />
+          </div>
+          <h2 className="text-xl font-bold text-white mb-2">Odd One Out</h2>
+          <p className="text-gray-400 text-sm">Find the subtle difference in the grid before your opponent does.</p>
+        </div>
+
+        {/* Target Battle Card */}
+        <div 
+          onClick={() => navigate('/target-battle')}
+          className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 cursor-pointer hover:border-blue-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1"
+        >
+          <div className="absolute top-0 left-0 w-full h-1 bg-blue-500/50 rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="w-14 h-14 bg-surface-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <Calculator className="text-blue-400" size={28} />
+          </div>
+          <h2 className="text-xl font-bold text-white mb-2">Target Battle</h2>
+          <p className="text-gray-400 text-sm">Combine numbers using math to hit the target. Closest wins!</p>
+        </div>
+
+        {/* Memory Match Card */}
+        <div 
+          onClick={() => navigate('/memory-match')}
+          className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 cursor-pointer hover:border-purple-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:-translate-y-1"
+        >
+          <div className="absolute top-0 left-0 w-full h-1 bg-purple-500/50 rounded-t-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="w-14 h-14 bg-surface-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <ImageIcon className="text-purple-400" size={28} />
+          </div>
+          <h2 className="text-xl font-bold text-white mb-2">Memory Match</h2>
+          <p className="text-gray-400 text-sm">Memorize the board and furiously match all the pairs!</p>
+        </div>
       </div>
 
       {/* Quick Info */}

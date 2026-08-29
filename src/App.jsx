@@ -16,6 +16,34 @@ import TicTacToe from './components/TicTacToe';
 import TicTacToeSetupPage from './pages/TicTacToeSetupPage';
 import OnlineTicTacToe from './components/OnlineTicTacToe';
 
+import GuessBattleSetupPage from './pages/GuessBattleSetupPage';
+import LocalGuessBattle from './components/GuessBattle/LocalGuessBattle';
+import OnlineGuessBattle from './components/GuessBattle/OnlineGuessBattle';
+
+import BisGutiyaSetupPage from './pages/BisGutiyaSetupPage';
+import LocalBisGutiya from './components/BisGutiya/LocalBisGutiya';
+
+import ReactionBattleSetupPage from './pages/ReactionBattleSetupPage';
+import LocalReactionBattle from './components/ReactionBattle/LocalReactionBattle';
+
+import NumberMemorySetupPage from './pages/NumberMemorySetupPage';
+import LocalNumberMemory from './components/NumberMemory/LocalNumberMemory';
+
+import WordScrambleSetupPage from './pages/WordScrambleSetupPage';
+import LocalWordScramble from './components/WordScramble/LocalWordScramble';
+
+import MissingLetterSetupPage from './pages/MissingLetterSetupPage';
+import LocalMissingLetter from './components/MissingLetter/LocalMissingLetter';
+
+import OddOneOutSetupPage from './pages/OddOneOutSetupPage';
+import LocalOddOneOut from './components/OddOneOut/LocalOddOneOut';
+
+import TargetBattleSetupPage from './pages/TargetBattleSetupPage';
+import LocalTargetBattle from './components/TargetBattle/LocalTargetBattle';
+
+import MemoryMatchSetupPage from './pages/MemoryMatchSetupPage';
+import LocalMemoryMatch from './components/MemoryMatch/LocalMemoryMatch';
+
 import HomePage from './HomePage';
 import Grid from './Grid';
 
@@ -75,6 +103,43 @@ function AppContent() {
                 <Route path="/tictactoe" element={<TicTacToeSetupPage />} />
                 <Route path="/tictactoe/local" element={<TicTacToe />} />
                 <Route path="/tictactoe/online/:roomId" element={<OnlineTicTacToe />} />
+
+                {/* Guess Battle */}
+                <Route path="/guess-battle" element={<GuessBattleSetupPage />} />
+                <Route path="/guess-battle/play" element={<LocalGuessBattle />} />
+                <Route path="/guess-battle/online/:roomId" element={<OnlineGuessBattle />} />
+
+                {/* Bis Gutiya */}
+                <Route path="/bis-gutiya" element={<BisGutiyaSetupPage />} />
+                <Route path="/bis-gutiya/play" element={<LocalBisGutiya />} />
+
+                {/* Reaction Battle */}
+                <Route path="/reaction-battle" element={<ReactionBattleSetupPage />} />
+                <Route path="/reaction-battle/play" element={<LocalReactionBattle />} />
+
+                {/* Number Memory */}
+                <Route path="/number-memory" element={<NumberMemorySetupPage />} />
+                <Route path="/number-memory/play" element={<LocalNumberMemory />} />
+
+                {/* Word Scramble */}
+                <Route path="/word-scramble" element={<WordScrambleSetupPage />} />
+                <Route path="/word-scramble/play" element={<LocalWordScramble />} />
+
+                {/* Missing Letter */}
+                <Route path="/missing-letter" element={<MissingLetterSetupPage />} />
+                <Route path="/missing-letter/play" element={<LocalMissingLetter />} />
+
+                {/* Odd One Out */}
+                <Route path="/odd-one-out" element={<OddOneOutSetupPage />} />
+                <Route path="/odd-one-out/play" element={<LocalOddOneOut />} />
+
+                {/* Target Battle */}
+                <Route path="/target-battle" element={<TargetBattleSetupPage />} />
+                <Route path="/target-battle/play" element={<LocalTargetBattle />} />
+
+                {/* Memory Match */}
+                <Route path="/memory-match" element={<MemoryMatchSetupPage />} />
+                <Route path="/memory-match/play" element={<LocalMemoryMatch />} />
 
                 {/* Profile */}
                 <Route path="/profile" element={<ProfilePage />} />
