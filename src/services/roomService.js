@@ -158,3 +158,62 @@ export const leaveTTTRoom = async (roomCode) => {
   const roomRef = ref(rtdb, `tttRooms/${roomCode}`);
   await remove(roomRef);
 };
+
+// ─── Party Rooms (Unified Multiplayer) ──────────────────────────────────────
+
+export const createPartyRoom = async (user) => {
+  const roomCode = generateRoomCode();
+  const roomRef = ref(rtdb, `partyRooms/${roomCode}`);
+
+  await set(roomRef, {
+    status: 'waiting', // waiting (for guest), lobby (picking game), playing (in game)
+    host: { uid: user.uid, displayName: user.displayName, photoURL: user.photoURL || null },
+    guest: null,
+    activeGame: null,
+    gameState: null,
+    createdAt: Date.now(),
+  });
+
+  return roomCode;
+};
+
+export const joinPartyRoom = async (roomCode, user) => {
+  const roomRef = ref(rtdb, `partyRooms/${roomCode}`);
+  const snapshot = await get(roomRef);
+
+  if (!snapshot.exists()) throw new Error('Party Room not found! Check the code.');
+
+  const room = snapshot.val();
+  
+  if (room.host.uid === user.uid) return roomCode; // Host re-joining
+  
+  if (room.status !== 'waiting' && room.guest?.uid !== user.uid) {
+    throw new Error('Party Room is full.');
+  }
+
+  await update(roomRef, {
+    guest: { uid: user.uid, displayName: user.displayName, photoURL: user.photoURL || null },
+    status: 'lobby', // Move to game selection lobby
+  });
+
+  return roomCode;
+};
+
+export const subscribeToPartyRoom = (roomCode, callback) => {
+  const roomRef = ref(rtdb, `partyRooms/${roomCode}`);
+  const unsubscribe = onValue(roomRef, (snapshot) => {
+    callback(snapshot.exists() ? snapshot.val() : null);
+  });
+  return unsubscribe;
+};
+
+export const updatePartyRoom = async (roomCode, updates) => {
+  const roomRef = ref(rtdb, `partyRooms/${roomCode}`);
+  await update(roomRef, updates);
+};
+
+export const leavePartyRoom = async (roomCode) => {
+  const roomRef = ref(rtdb, `partyRooms/${roomCode}`);
+  await remove(roomRef);
+};
+

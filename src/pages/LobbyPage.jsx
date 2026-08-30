@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Gamepad2, Globe, Hash, Target, Trophy, User, Zap, Brain, Type, Search, Calculator, Image as ImageIcon } from 'lucide-react';
+import { Gamepad2, Globe, Hash, Target, Trophy, User, Users, Zap, Brain, Type, Search, Calculator, Image as ImageIcon } from 'lucide-react';
 
 const LobbyPage = () => {
   const { user, isConfigured } = useAuth();
@@ -10,22 +10,66 @@ const LobbyPage = () => {
   const displayName = isConfigured && user ? user.displayName : 'Guest';
 
   return (
-    <div className="flex flex-col items-center min-h-[calc(100vh-56px)] px-4 py-10 animate-fade-in">
-      {/* Welcome */}
-      <div className="text-center mb-10">
-        <h1 className="text-3xl md:text-4xl font-black mb-2">
-          <span className="text-white">Hey, </span>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
-            {displayName}
-          </span>
-          <span className="text-white"> 👋</span>
-        </h1>
-        <p className="text-gray-500 text-sm">Choose your battle mode</p>
+    <div className="min-h-[calc(100vh-56px)] game-bg p-4 md:p-8">
+      
+      {/* ── ONLINE PARTY SECTION ── */}
+      <div className="max-w-6xl mx-auto mb-12">
+        <div className="flex items-center gap-3 mb-6">
+          <Globe className="text-teal-400" size={32} />
+          <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-500 tracking-tight">
+            ONLINE PARTY
+          </h1>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Create Room */}
+          <button 
+            onClick={() => navigate('/party')}
+            className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 text-left hover:border-teal-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(20,184,166,0.15)] hover:-translate-y-1 overflow-hidden"
+          >
+            <div className="absolute top-0 left-0 w-full h-1 bg-teal-500/50 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                Create Room
+              </h2>
+              <div className="w-10 h-10 bg-teal-500/20 text-teal-400 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Users size={20} />
+              </div>
+            </div>
+            <p className="text-gray-400 text-sm">Create a private party room and invite a friend to play all 11 games online.</p>
+          </button>
+
+          {/* Join Room */}
+          <button 
+            onClick={() => navigate('/party/join')}
+            className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 text-left hover:border-emerald-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] hover:-translate-y-1 overflow-hidden"
+          >
+            <div className="absolute top-0 left-0 w-full h-1 bg-emerald-500/50 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                Join Room
+              </h2>
+              <div className="w-10 h-10 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Hash size={20} />
+              </div>
+            </div>
+            <p className="text-gray-400 text-sm">Got a 6-digit code? Enter it here to join your friend's party room.</p>
+          </button>
+        </div>
       </div>
 
-      {/* Game Modes */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto w-full">
-        {/* Local Duel Card */}
+      {/* ── LOCAL SPLIT-SCREEN SECTION ── */}
+      <div className="max-w-6xl mx-auto mb-10">
+        <div className="flex items-center gap-3 mb-6">
+          <Users className="text-white" size={28} />
+          <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
+            LOCAL SPLIT-SCREEN
+          </h2>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          
+          {/* Lexicon Duel Card */}
         <div 
           onClick={() => navigate('/local')}
           className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 cursor-pointer hover:border-p1-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1"
@@ -181,6 +225,7 @@ const LobbyPage = () => {
           <h2 className="text-xl font-bold text-white mb-2">Memory Match</h2>
           <p className="text-gray-400 text-sm">Memorize the board and furiously match all the pairs!</p>
         </div>
+      </div>
       </div>
 
       {/* Quick Info */}

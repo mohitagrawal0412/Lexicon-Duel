@@ -44,6 +44,10 @@ import LocalTargetBattle from './components/TargetBattle/LocalTargetBattle';
 import MemoryMatchSetupPage from './pages/MemoryMatchSetupPage';
 import LocalMemoryMatch from './components/MemoryMatch/LocalMemoryMatch';
 
+import CreateParty from './pages/Party/CreateParty';
+import JoinParty from './pages/Party/JoinParty';
+import PartyRoom from './pages/Party/PartyRoom';
+
 import HomePage from './HomePage';
 import Grid from './Grid';
 
@@ -140,6 +144,11 @@ function AppContent() {
                 {/* Memory Match */}
                 <Route path="/memory-match" element={<MemoryMatchSetupPage />} />
                 <Route path="/memory-match/play" element={<LocalMemoryMatch />} />
+
+                {/* Party Room (Unified Online) */}
+                <Route path="/party" element={<CreateParty />} />
+                <Route path="/party/join" element={<JoinParty />} />
+                <Route path="/party/:roomId" element={<PartyRoom />} />
 
                 {/* Profile */}
                 <Route path="/profile" element={<ProfilePage />} />
