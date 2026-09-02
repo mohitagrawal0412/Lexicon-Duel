@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { LogOut, User, Trophy, Home } from 'lucide-react';
+import { LogOut, User, Trophy, Home, History } from 'lucide-react';
 
 const Navbar = () => {
   const { user, logout, isConfigured } = useAuth();
@@ -20,6 +20,7 @@ const Navbar = () => {
   const navItems = [
     { path: '/', label: 'Lobby', icon: Home },
     { path: '/leaderboard', label: 'Leaderboard', icon: Trophy },
+    { path: '/history', label: 'History', icon: History },
     { path: '/profile', label: 'Profile', icon: User },
   ];
 

@@ -98,6 +98,25 @@ const OnlineSetupPage = () => {
         <p className="text-gray-500 text-sm">Play in real-time with friends</p>
       </div>
 
+      {/* Random Matchmaking */}
+      <button
+        onClick={() => navigate('/party/duel?game=lexiconDuel')}
+        className="w-full max-w-md mb-6 group bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 text-left hover:border-purple-500/50 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden"
+      >
+        <div className="absolute top-0 left-0 w-full h-1 bg-purple-500/50 opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 bg-surface-800 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+            <Users className="text-purple-400" size={24} />
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-white">Find Random Opponent</h2>
+            <p className="text-sm text-gray-400">Jump into matchmaking instantly</p>
+          </div>
+        </div>
+      </button>
+
+      <p className="text-gray-600 text-xs font-bold uppercase tracking-wider mb-4 max-w-md w-full text-center">— or play with a friend —</p>
+
       <div className="card-glass w-full max-w-md overflow-hidden">
         {/* Tabs */}
         <div className="flex border-b border-white/10">

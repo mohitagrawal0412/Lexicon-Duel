@@ -93,7 +93,7 @@ const TicTacToeSetupPage = () => {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-lg">
           <button
             onClick={() => navigate('/tictactoe/local')}
             className="group card-glass p-6 text-center hover:border-teal-400/20 hover:bg-teal-400/[0.03] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
@@ -104,12 +104,21 @@ const TicTacToeSetupPage = () => {
           </button>
 
           <button
+            onClick={() => navigate('/party/duel?game=ticTacToe')}
+            className="group card-glass p-6 text-center hover:border-purple-400/20 hover:bg-purple-400/[0.03] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <Globe className="w-8 h-8 text-purple-400 mx-auto mb-3 group-hover:scale-110 transition-transform" />
+            <h3 className="text-base font-bold text-white mb-1">Random</h3>
+            <p className="text-xs text-gray-500">Find a random opponent</p>
+          </button>
+
+          <button
             onClick={() => setMode('online')}
             className="group card-glass p-6 text-center hover:border-blue-400/20 hover:bg-blue-400/[0.03] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
           >
             <Globe className="w-8 h-8 text-blue-400 mx-auto mb-3 group-hover:scale-110 transition-transform" />
-            <h3 className="text-base font-bold text-white mb-1">Online</h3>
-            <p className="text-xs text-gray-500">Play with a friend remotely</p>
+            <h3 className="text-base font-bold text-white mb-1">Private</h3>
+            <p className="text-xs text-gray-500">Create/Join room with code</p>
           </button>
         </div>
       </div>
