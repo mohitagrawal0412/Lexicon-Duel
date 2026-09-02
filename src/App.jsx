@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import LobbyPage from './pages/LobbyPage';
 import ProfilePage from './pages/ProfilePage';
 import LeaderboardPage from './pages/LeaderboardPage';
+import MatchHistoryPage from './pages/MatchHistoryPage';
 import OnlineSetupPage from './pages/OnlineSetupPage';
 import OnlineGrid from './components/OnlineGrid';
 import TicTacToe from './components/TicTacToe';
@@ -43,6 +44,11 @@ import LocalTargetBattle from './components/TargetBattle/LocalTargetBattle';
 
 import MemoryMatchSetupPage from './pages/MemoryMatchSetupPage';
 import LocalMemoryMatch from './components/MemoryMatch/LocalMemoryMatch';
+
+import CreateParty from './pages/Party/CreateParty';
+import JoinParty from './pages/Party/JoinParty';
+import PartyRoom from './pages/Party/PartyRoom';
+import PartyDuelPage from './pages/Party/PartyDuelPage';
 
 import HomePage from './HomePage';
 import Grid from './Grid';
@@ -141,11 +147,18 @@ function AppContent() {
                 <Route path="/memory-match" element={<MemoryMatchSetupPage />} />
                 <Route path="/memory-match/play" element={<LocalMemoryMatch />} />
 
+                {/* Party Room (Unified Online) */}
+                <Route path="/party" element={<CreateParty />} />
+                <Route path="/party/join" element={<JoinParty />} />
+                <Route path="/party/duel" element={<PartyDuelPage />} />
+                <Route path="/party/:roomId" element={<PartyRoom />} />
+
                 {/* Profile */}
                 <Route path="/profile" element={<ProfilePage />} />
 
-                {/* Leaderboard */}
+                {/* Leaderboard & History */}
                 <Route path="/leaderboard" element={<LeaderboardPage />} />
+                <Route path="/history" element={<MatchHistoryPage />} />
 
                 {/* Online Multiplayer */}
                 <Route path="/online" element={<OnlineSetupPage />} />

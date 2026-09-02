@@ -174,7 +174,7 @@ export default function GuessBattleSetupPage() {
           )}
 
           {activeTab === 'online' && (
-            <div className="space-y-8">
+            <div className="space-y-6">
               {!user ? (
                 <div className="p-6 bg-surface-800/80 rounded-2xl text-center border border-white/10">
                   <p className="text-gray-300 mb-4">You need to be logged in to play online.</p>
@@ -186,44 +186,19 @@ export default function GuessBattleSetupPage() {
                   </button>
                 </div>
               ) : (
-                <>
-                  <div>
-                    <h3 className="text-gray-400 text-sm font-semibold mb-3 uppercase tracking-wider">Host Game</h3>
-                    <button
-                      onClick={handleCreateOnline}
-                      disabled={isCreating || isJoining}
-                      className="w-full py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-xl font-bold text-lg transition-transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2"
-                    >
-                      {isCreating ? <><Loader2 className="animate-spin" size={20} /> Creating...</> : 'Create Room'}
-                    </button>
+                <div className="space-y-4">
+                  <div className="p-4 bg-surface-800/50 rounded-xl border border-white/10">
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      Find a random opponent online and battle in Guess Battle! You'll be matched with another player who is also looking for a game.
+                    </p>
                   </div>
-
-                  <div className="relative flex items-center justify-center">
-                    <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/10"></div></div>
-                    <div className="relative px-4 bg-surface-900 text-gray-500 text-sm font-medium">OR</div>
-                  </div>
-
-                  <form onSubmit={handleJoinOnline}>
-                    <h3 className="text-gray-400 text-sm font-semibold mb-3 uppercase tracking-wider">Join Room</h3>
-                    <div className="flex gap-3">
-                      <input
-                        type="text"
-                        placeholder="ENTER 6-LETTER CODE"
-                        value={joinCode}
-                        onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
-                        maxLength={6}
-                        className="flex-1 bg-surface-800/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 uppercase tracking-widest font-mono text-center font-bold"
-                      />
-                      <button
-                        type="submit"
-                        disabled={joinCode.length !== 6 || isCreating || isJoining}
-                        className="px-6 py-3 bg-surface-800 hover:bg-surface-700 text-white rounded-xl font-bold transition-colors disabled:opacity-50 disabled:hover:bg-surface-800"
-                      >
-                        {isJoining ? <Loader2 className="animate-spin" size={20} /> : 'Join'}
-                      </button>
-                    </div>
-                  </form>
-                </>
+                  <button
+                    onClick={() => navigate('/party/duel?game=guessBattle')}
+                    className="w-full py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-xl font-bold text-lg transition-transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+                  >
+                    <Globe size={20} /> Find Random Opponent
+                  </button>
+                </div>
               )}
             </div>
           )}
