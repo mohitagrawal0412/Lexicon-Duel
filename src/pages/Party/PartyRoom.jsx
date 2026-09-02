@@ -2,20 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { subscribeToPartyRoom, updatePartyRoom, leavePartyRoom } from '../../services/roomService';
-import { Loader2, Copy, Check, Gamepad2, Brain, Zap, Target, Search, Type, Image as ImageIcon, Calculator, Hash } from 'lucide-react';
+import { subscribeToRelationship } from '../../services/relationshipService';
+import { Loader2, Copy, Check, Gamepad2, Brain, Zap, Target, Search, Type, Image as ImageIcon, Calculator, Hash, Trophy, Users, Swords } from 'lucide-react';
 
-// STUB COMPONENTS FOR ONLINE GAMES (We will implement these later)
-const OnlineBisGutiya = () => <div className="text-white text-center p-10">Online Bis Gutiya Component (Coming Soon)</div>;
-const OnlineGuessBattle = () => <div className="text-white text-center p-10">Online Guess Battle Component (Coming Soon)</div>;
-const OnlineReactionBattle = () => <div className="text-white text-center p-10">Online Reaction Battle Component (Coming Soon)</div>;
-const OnlineNumberMemory = () => <div className="text-white text-center p-10">Online Number Memory Component (Coming Soon)</div>;
-const OnlineWordScramble = () => <div className="text-white text-center p-10">Online Word Scramble Component (Coming Soon)</div>;
-const OnlineMissingLetter = () => <div className="text-white text-center p-10">Online Missing Letter Component (Coming Soon)</div>;
-const OnlineOddOneOut = () => <div className="text-white text-center p-10">Online Odd One Out Component (Coming Soon)</div>;
-const OnlineTargetBattle = () => <div className="text-white text-center p-10">Online Target Battle Component (Coming Soon)</div>;
-const OnlineMemoryMatch = () => <div className="text-white text-center p-10">Online Memory Match Component (Coming Soon)</div>;
+// Online game components for Party Room
+import OnlineBisGutiya from '../../components/BisGutiya/OnlineBisGutiya';
+import OnlineReactionBattle from '../../components/ReactionBattle/OnlineReactionBattle';
+import OnlineGuessBattle from '../../components/GuessBattle/OnlineGuessBattle';
+import OnlineNumberMemory from '../../components/NumberMemory/OnlineNumberMemory';
+import OnlineWordScramble from '../../components/WordScramble/OnlineWordScramble';
+import OnlineMissingLetter from '../../components/MissingLetter/OnlineMissingLetter';
+
+import OnlineOddOneOut from '../../components/OddOneOut/OnlineOddOneOut';
+import OnlineTargetBattle from '../../components/TargetBattle/OnlineTargetBattle';
+import OnlineMemoryMatch from '../../components/MemoryMatch/OnlineMemoryMatch';
+
+import OnlineTicTacToeParty from '../../components/TicTacToe/OnlineTicTacToeParty';
+import OnlineLexiconDuelParty from '../../components/LexiconDuel/OnlineLexiconDuelParty';
 
 const GAMES = [
+  { id: 'ticTacToe', name: 'Tic Tac Toe', icon: Hash, color: 'text-emerald-400', bg: 'bg-emerald-500' },
+  { id: 'lexiconDuel', name: 'Lexicon Duel', icon: Swords, color: 'text-yellow-400', bg: 'bg-yellow-500' },
   { id: 'bisGutiya', name: 'Bis Gutiya', icon: Gamepad2, color: 'text-orange-400', bg: 'bg-orange-500' },
   { id: 'guessBattle', name: 'Guess Battle', icon: Target, color: 'text-pink-400', bg: 'bg-pink-500' },
   { id: 'reactionBattle', name: 'Reaction Battle', icon: Zap, color: 'text-yellow-400', bg: 'bg-yellow-500' },
@@ -35,6 +42,8 @@ export default function PartyRoom() {
   const [room, setRoom] = useState(null);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
+  const [rivalStats, setRivalStats] = useState(null);
+  const [showStats, setShowStats] = useState(false);
 
   useEffect(() => {
     const unsubscribe = subscribeToPartyRoom(roomId, (data) => {
@@ -47,6 +56,15 @@ export default function PartyRoom() {
     });
     return () => unsubscribe();
   }, [roomId]);
+
+  useEffect(() => {
+    if (room?.status === 'lobby' && room.host?.uid && room.guest?.uid) {
+      const unsubscribe = subscribeToRelationship(room.host.uid, room.guest.uid, (data) => {
+        setRivalStats(data);
+      });
+      return () => unsubscribe();
+    }
+  }, [room?.status, room?.host?.uid, room?.guest?.uid]);
 
   const copyCode = () => {
     navigator.clipboard.writeText(roomId);
@@ -69,7 +87,7 @@ export default function PartyRoom() {
     await updatePartyRoom(roomId, {
       status: 'playing',
       activeGame: gameId,
-      gameState: null // Reset game state for the new game
+      gameState: 'initializing' // Reset game state for the new game
     });
   };
 
@@ -158,6 +176,51 @@ export default function PartyRoom() {
           </div>
         </div>
 
+        {/* Rivalry Stats Header */}
+        {rivalStats && rivalStats.stats && (
+          <div className="max-w-6xl mx-auto w-full mb-8">
+            <div className="flex justify-center mb-4">
+              <button 
+                onClick={() => setShowStats(!showStats)}
+                className="bg-surface-800 hover:bg-surface-700 border border-teal-500/30 text-teal-400 font-bold px-6 py-2 rounded-full transition-colors shadow-lg flex items-center gap-2"
+              >
+                <Trophy size={18} />
+                {showStats ? 'Hide Head-to-Head Record' : 'View Head-to-Head Record'}
+              </button>
+            </div>
+            
+            {showStats && (
+              <div className="bg-gradient-to-br from-surface-800 to-surface-900 border border-white/5 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between shadow-2xl relative overflow-hidden animate-slide-up">
+                 <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-teal-400 to-blue-500"></div>
+                 <div className="flex items-center gap-6 mb-4 md:mb-0 ml-4">
+                   <div className="w-16 h-16 bg-surface-700 rounded-full flex items-center justify-center shadow-inner border border-white/10">
+                     <Trophy className="text-yellow-400 w-8 h-8" />
+                   </div>
+                   <div>
+                     <h3 className="text-xl font-black text-white mb-1 tracking-wider uppercase">Head-to-Head History</h3>
+                     <p className="text-gray-400 text-sm font-bold">{rivalStats.stats.totalGames || 0} Total Matches Played</p>
+                   </div>
+                 </div>
+                 
+                 <div className="flex gap-4 items-center bg-surface-900/50 p-4 rounded-xl border border-white/5">
+                    <div className="flex flex-col items-center">
+                      <span className="text-teal-400 font-bold mb-1 truncate max-w-[100px] text-sm">{room.host.displayName}</span>
+                      <span className="text-3xl font-black text-white">{rivalStats.stats.overallWins?.[room.host.uid] || 0}</span>
+                    </div>
+                    <div className="flex flex-col items-center px-4 border-x border-white/10 mx-2">
+                      <span className="text-gray-500 font-bold text-xs uppercase tracking-widest mb-1">Ties</span>
+                      <span className="text-xl font-black text-gray-400">{rivalStats.stats.overallWins?.ties || 0}</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <span className="text-emerald-400 font-bold mb-1 truncate max-w-[100px] text-sm">{room.guest?.displayName}</span>
+                      <span className="text-3xl font-black text-white">{rivalStats.stats.overallWins?.[room.guest.uid] || 0}</span>
+                    </div>
+                 </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Game Selection Grid */}
         <div className="max-w-6xl mx-auto w-full flex-1">
           <h2 className="text-3xl font-black text-white mb-2 text-center">
@@ -213,6 +276,8 @@ export default function PartyRoom() {
     let ActiveGameComponent = null;
 
     switch (room.activeGame) {
+      case 'ticTacToe': ActiveGameComponent = OnlineTicTacToeParty; break;
+      case 'lexiconDuel': ActiveGameComponent = OnlineLexiconDuelParty; break;
       case 'bisGutiya': ActiveGameComponent = OnlineBisGutiya; break;
       case 'guessBattle': ActiveGameComponent = OnlineGuessBattle; break;
       case 'reactionBattle': ActiveGameComponent = OnlineReactionBattle; break;
@@ -236,5 +301,4 @@ export default function PartyRoom() {
   return null;
 }
 
-// Temporary fallback for lucide-react icon import missing `Users`
-import { Users } from 'lucide-react';
+

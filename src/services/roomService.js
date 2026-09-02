@@ -217,3 +217,77 @@ export const leavePartyRoom = async (roomCode) => {
   await remove(roomRef);
 };
 
+// ─── Matchmaking (Random Duel) ─────────────────────────────────────────────
+
+export const findRandomMatch = async (user, preferredGame = 'any', onMatchFound) => {
+  const queueRef = ref(rtdb, 'matchmaking');
+  const snapshot = await get(queueRef);
+
+  if (snapshot.exists()) {
+    const queue = snapshot.val();
+    // Find an open room where the host is not the current user, AND the preferredGame matches
+    const openKeys = Object.keys(queue).filter(k => {
+      const entry = queue[k];
+      return entry.status === 'waiting' && entry.host.uid !== user.uid && entry.preferredGame === preferredGame;
+    });
+
+    if (openKeys.length > 0) {
+      // Join the first available
+      const matchKey = openKeys[0];
+      const roomCode = generateRoomCode();
+      
+      // 1. Create the actual party room
+      const roomRef = ref(rtdb, `partyRooms/${roomCode}`);
+      await set(roomRef, {
+        status: preferredGame !== 'any' ? 'playing' : 'lobby', // Instantly jump to playing if game selected
+        host: queue[matchKey].host,
+        guest: { uid: user.uid, displayName: user.displayName, photoURL: user.photoURL || null },
+        activeGame: preferredGame !== 'any' ? preferredGame : null,
+        gameState: null,
+        createdAt: Date.now(),
+      });
+
+      // 2. Notify the host by updating the queue entry
+      const matchRef = ref(rtdb, `matchmaking/${matchKey}`);
+      await update(matchRef, {
+        status: 'matched',
+        roomId: roomCode
+      });
+
+      return { roomCode, isHost: false, queueKey: null };
+    }
+  }
+
+  // If no one is waiting, create a new queue entry
+  const queueKey = `${user.uid}_${preferredGame}`;
+  const newMatchRef = ref(rtdb, `matchmaking/${queueKey}`);
+  await set(newMatchRef, {
+    status: 'waiting',
+    preferredGame,
+    host: { uid: user.uid, displayName: user.displayName, photoURL: user.photoURL || null },
+    roomId: null,
+    timestamp: Date.now()
+  });
+
+  // Listen for someone joining our queue entry
+  const unsubscribe = onValue(newMatchRef, (snap) => {
+    if (snap.exists()) {
+      const data = snap.val();
+      if (data.status === 'matched' && data.roomId) {
+        // Clean up queue entry
+        remove(newMatchRef);
+        onMatchFound(data.roomId);
+        unsubscribe();
+      }
+    }
+  });
+
+  return { roomCode: null, isHost: true, queueKey, unsubscribe };
+};
+
+export const cancelMatchmaking = async (queueKey) => {
+  if (!queueKey) return;
+  const matchRef = ref(rtdb, `matchmaking/${queueKey}`);
+  await remove(matchRef);
+};
+

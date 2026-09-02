@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Gamepad2, Globe, Hash, Target, Trophy, User, Users, Zap, Brain, Type, Search, Calculator, Image as ImageIcon } from 'lucide-react';
+import { Gamepad2, Globe, Hash, Target, Users, Zap, Brain, Type, Search, Calculator, Image as ImageIcon } from 'lucide-react';
 
 const LobbyPage = () => {
   const { user, isConfigured } = useAuth();
@@ -21,7 +21,7 @@ const LobbyPage = () => {
           </h1>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
           {/* Create Room */}
           <button 
             onClick={() => navigate('/party')}
@@ -55,7 +55,25 @@ const LobbyPage = () => {
             </div>
             <p className="text-gray-400 text-sm">Got a 6-digit code? Enter it here to join your friend's party room.</p>
           </button>
-        </div>
+
+          {/* Play Duel (Random Matchmaking) */}
+          <button 
+            onClick={() => navigate('/party/duel')}
+            className="group relative bg-surface-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 text-left hover:border-blue-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1 overflow-hidden"
+          >
+            <div className="absolute top-0 left-0 w-full h-1 bg-blue-500/50 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                Play Duel
+              </h2>
+              <div className="w-10 h-10 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Globe size={20} />
+              </div>
+            </div>
+            <p className="text-gray-400 text-sm">Find a random opponent online instantly and battle in the Party Room.</p>
+          </button>
+
+      </div>
       </div>
 
       {/* ── LOCAL SPLIT-SCREEN SECTION ── */}
